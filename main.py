@@ -552,7 +552,7 @@ def game_loop(screen):
                 animation_sprites.add(
                     game_sprites.Explosion(bullet.get_center(), 1))
                 # ----> SET DAMAGE (0.5 is very hard, 1 is Medium, 2 is Easy, 3 is Very Easy)
-                enemy.damaged(2) # -----> This one
+                enemy.damaged(1.5) # -----> This one
                 bullet.kill()
                 #Kill enemy if appropriate.
                 if enemy.get_hp() <= 0 and not enemy.get_killed():
