@@ -3,6 +3,7 @@
 A bullet-hell game developed in Python3 and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
 
 # Dependencies
+- Python 2
 - Python 3
 - PyGame
 
@@ -62,4 +63,4 @@ All images and sounds are credited to their respective creators.
 - **In-Game Music**: Includes tracks like "It's Going Down Now" (Persona 3 Reload) and "Kingslayer" (Bring Me The Horizon feat. BabyMetal)
 - **Assets**: Sound effects and sprites sourced from Project Touhou and Terraria's Calamity Mod
 
-# BEWARE. THE GAME GETS HARDER WHEN KINGSLAYER PLAYS.
+# BEWARE. THE GAME IS AT ITS HARDEST DIFFICULTY ONCE "KINGSLAYER" PLAYS
