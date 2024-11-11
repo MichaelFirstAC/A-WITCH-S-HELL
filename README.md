@@ -59,8 +59,8 @@ Navigate with arrow keys; press **Z** to select:
 All images and sounds are credited to their respective creators.
 
 # File Descriptions
-- **Main-Menu Music**: "Color your night" - Persona 3 Reload
-- **In-Game Music**: Includes tracks like "It's Going Down Now" (Persona 3 Reload) and "Kingslayer" (Bring Me The Horizon feat. BabyMetal)
+- **Main-Menu Music**: "Bad Apple" - Touhou Music
+- **In-Game Music**: Includes tracks like "It's Going Down Now" (Persona 3 Reload), "Young Girl A" (Siinamota) and "Kingslayer" (Bring Me The Horizon feat. BabyMetal)
 - **Assets**: Sound effects and sprites sourced from Project Touhou and Terraria's Calamity Mod
 
 # BEWARE. THE GAME IS AT ITS HARDEST DIFFICULTY ONCE "KINGSLAYER" PLAYS
