@@ -1,8 +1,8 @@
 # A Witch’s Hell
 
 ![Header Image](images/title.png)
-# [Gameplay Demo](https://youtu.be/9jMt8xT-MtA)
 
+## [Gameplay Demo](https://youtu.be/9jMt8xT-MtA)
 A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
 
 # Screenshots
