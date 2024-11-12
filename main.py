@@ -1,9 +1,9 @@
 """Author: Michael
-   "A WITCH'S HELL"
-   Description: Small Bullet Hell Game - A bullet hell game created in 
-   pygame with the game_sprites class.
-   Known bugs: Some sound do not play when they are supossed to/Late at playing.
-   Please note that the instructions are in full detail in the Readme text 
+    "A WITCH'S HELL"
+    Description: Small Bullet Hell Game - A bullet hell game created in 
+    pygame with the game_sprites class.
+    Known bugs: Some sound do not play when they are supossed to/Late at playing.
+    Please note that the instructions are in full detail in the Readme text 
 """
 
 # I - IMPORT AND INITIALIZE
@@ -16,7 +16,7 @@ pygame.init()
 
 def main():
     '''This function defines the 'mainline logic' of the game'''
-      
+    
     # DISPLAY - set display resolution and caption.
     screen_size = (640, 480)
     screen = pygame.display.set_mode(screen_size)    
@@ -48,7 +48,7 @@ def pause(screen):
     background = screen
     #dark surface is a special surface that is blited to make background darker.
     dark = pygame.Surface((background.get_width()-200, background.get_height()), 
-                          flags=pygame.SRCALPHA)
+                        flags=pygame.SRCALPHA)
     dark.fill((50, 50, 50, 0))
     background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)    
     paused = pygame.image.load("images/paused.png").convert_alpha()
@@ -71,20 +71,20 @@ def pause(screen):
     ok.set_volume(0.3)
     
     # A - Action (broken into ALTER steps)
-     
+    
     # A - Assign values to key variables
     clock = pygame.time.Clock()
     keep_going = True
     FPS = 30
     #Starting select.
     selected = [buttons[0]]    
-     
+    
     # L - Loop
     while keep_going:
-     
+    
         # T - Timer to set frame rate
         clock.tick(FPS)
-     
+    
         # E - Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -115,7 +115,7 @@ def pause(screen):
         #Select button highlight
         for select in selected:
             select.set_select()
-     
+    
         # R - Refresh display
         all_sprites.clear(screen, background)
         all_sprites.update()
@@ -134,7 +134,7 @@ def game_over(screen):
     background = screen
     #dark surface is a special surface that is blited to make background darker.
     dark = pygame.Surface((background.get_width()-200, background.get_height()), 
-                          flags=pygame.SRCALPHA)
+                        flags=pygame.SRCALPHA)
     dark.fill((50, 50, 50, 0))
     background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)      
     game_over = pygame.image.load("images/game_over.png").convert_alpha()
@@ -158,20 +158,20 @@ def game_over(screen):
     ok.set_volume(0.3)
     
     # A - Action (broken into ALTER steps)
-     
+    
     # A - Assign values to key variables
     clock = pygame.time.Clock()
     keep_going = True
     FPS = 30
     #Starting select.
     selected = [buttons[0]]    
-     
+    
     # L - Loop
     while keep_going:
-     
+    
         # T - Timer to set frame rate
         clock.tick(FPS)
-     
+    
         # E - Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -202,7 +202,7 @@ def game_over(screen):
         #Select button highlight
         for select in selected:
             select.set_select()
-     
+    
         # R - Refresh display
         all_sprites.clear(screen, background)
         all_sprites.update()
@@ -245,20 +245,20 @@ def game_intro(screen):
     reset.set_volume(0.3)
     
     # A - Action (broken into ALTER steps)
-     
+    
     # A - Assign values to key variables
     clock = pygame.time.Clock()
     keep_going = True
     FPS = 30
     #Starting select.
     selected = [buttons[0]]    
-     
+    
         # L - Loop
     while keep_going:
-     
+    
         # T - Timer to set frame rate
         clock.tick(FPS)
-     
+    
         # E - Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -297,7 +297,7 @@ def game_intro(screen):
         #Select button highlight
         for select in selected:
             select.set_select()
-     
+    
         # R - Refresh display
         all_sprites.clear(screen, background)
         all_sprites.update()
@@ -402,16 +402,16 @@ def game_loop(screen):
     window_exit = 0
     restart = 0
     game_over_frames = 30
-     
+    
     # Hide the mouse pointer
     pygame.mouse.set_visible(False)
- 
+
     # LOOP
     while keep_going:
-     
+    
         # TIME
         clock.tick(FPS)
-     
+    
         # EVENT HANDLING: player use arrow keys
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -448,7 +448,7 @@ def game_loop(screen):
                 player.shoot_mode(0)
             #Add bomb to sprite if there is no bomb on screen, not locked.
             if keys_pressed[pygame.K_x] and not bomb_sprites and not \
-               player.get_lock() and score_tab.get_bombs():
+                player.get_lock() and score_tab.get_bombs():
                 bombing.play()
                 player.set_invincible(2)
                 bomb_sprites.add(game_sprites.Bomb(player.get_center()))
@@ -496,7 +496,7 @@ def game_loop(screen):
                 hitbox, enemy_bullet_sprites.sprites(), False):
                 #Shrink the hitbox rect to detect actual size of hitbox
                 if hitbox.rect.inflate(-14,-14).colliderect(hit) and \
-                   not player.get_invincible():
+                    not player.get_invincible():
                     #Player death events
                     animation_sprites.add(game_sprites.Explosion(
                         player.get_center(), 0))
@@ -509,7 +509,7 @@ def game_loop(screen):
                 hitbox, enemy_sprites.sprites(), False):   
                 #Shrink the hitbox rect to detect actual size of hitbox
                 if hitbox.rect.inflate(-14,-14).colliderect(enemy) and \
-                   not player.get_invincible():
+                    not player.get_invincible():
                     #Player death events
                     animation_sprites.add(game_sprites.Explosion(
                         player.get_center(), 0))
@@ -521,7 +521,7 @@ def game_loop(screen):
             for bullet in pygame.sprite.spritecollide(
                 player, enemy_bullet_sprites.sprites(), False):  
                 if player.rect.inflate(-6,-12).colliderect(bullet) and \
-                   not player.get_invincible():
+                    not player.get_invincible():
                     #Graze events if bullet can be grazed
                     if not bullet.get_grazed():
                         graze.play()
@@ -542,7 +542,7 @@ def game_loop(screen):
             #Add point, life or bomb count to score tab depedning on type.
             score_tab.add_points((drop_type)+6) #+6 is used for drop points
             drop.kill()
-                 
+            
         #Enemy rect and shoot events.
         for enemy in enemy_sprites.sprites():  
             #See if enemy is hit by bullet. Return list of bullet that hit.
@@ -552,7 +552,7 @@ def game_loop(screen):
                 animation_sprites.add(
                     game_sprites.Explosion(bullet.get_center(), 1))
                 # ----> SET DAMAGE (0.5 is very hard, 1 is Medium, 2 is Easy, 3 is Very Easy)
-                enemy.damaged(1.5) # -----> This one
+                enemy.damaged(2) # -----> This one
                 bullet.kill()
                 #Kill enemy if appropriate.
                 if enemy.get_hp() <= 0 and not enemy.get_killed():
@@ -572,7 +572,7 @@ def game_loop(screen):
                         random_num = random.randrange(15)
                         #3 in 15 chance of droping big points
                         if random_num == 3 or random_num == 7 or \
-                           random_num == 12:
+                            random_num == 12:
                             drop_type = 1
                         #Special drops for only boss types, 1 in 15 chance.
                         elif random_num == 5 and drops == 4:
@@ -590,10 +590,10 @@ def game_loop(screen):
                             screen, enemy, drop_type))
                     #Add the score of the corresponding enemy killed.
                     score_tab.add_points(enemy.get_type())
-           
+            
             #Let enemy shoot if appropriate.
             if not enemy.get_cool_rate() and not enemy.get_down_frames() \
-               and not enemy.get_lock():
+                and not enemy.get_lock():
                 #Play bullet sound correpsonding to their bullet type
                 bullet_sounds[enemy.get_type()-1].play()
                 #Create bullets.
@@ -627,7 +627,7 @@ def game_loop(screen):
         #Enemy spawning event, spawn enemy if appropriate, not pass spawn limit.
         for spawner in spawners:
             if (spawner.get_type() == 1 and boss_enemies < boss_limit) or\
-               (spawner.get_type() == 0 and common_enemies < common_limit):    
+                (spawner.get_type() == 0 and common_enemies < common_limit):    
                 spawner.set_lock(0)
                 if not spawner.get_spawn_frames():
                     enemy_sprites.add(spawner.spawn_enemy())
@@ -651,7 +651,7 @@ def game_loop(screen):
         all_sprites = pygame.sprite.OrderedUpdates(low_sprites, enemy_sprites,
             player_bullet_sprites, enemy_bullet_sprites,
             animation_sprites, bomb_sprites, drop_sprites, top_sprites)
-                         
+                        
         # REFRESH SCREEN - clear previous sprites, update positions and display
         all_sprites.clear(screen, background.get_surface())
         all_sprites.update()
@@ -684,6 +684,6 @@ def game_loop(screen):
     #Return quit pygame value if window exit is called.
     else:
         return 0
-     
+    
 # Call the main function
 main()    
