@@ -69,9 +69,6 @@ Navigate with arrow keys; press **Z** to select:
 # Important Notes
 All images and sounds are credited to their respective creators.
 
-# Important Note
-+ I do not own any of the sound or image files containing in this project.
-
 # Files
 - Main-menu Music: Bad Apple (Project Touhou)
 - Background Music: It's going down now (Persona 3 Reload)
