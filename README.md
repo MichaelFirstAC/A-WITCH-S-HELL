@@ -69,9 +69,20 @@ Navigate with arrow keys; press **Z** to select:
 # Important Notes
 All images and sounds are credited to their respective creators.
 
-# File Descriptions
-- **Main-Menu Music**: "Bad Apple" - Touhou Music
-- **In-Game Music**: Includes tracks like "It's Going Down Now" (Persona 3 Reload), "Young Girl A" (Siinamota) and "Kingslayer" (Bring Me The Horizon feat. BabyMetal)
-- **Assets**: Sound effects and sprites sourced from Project Touhou and Terraria's Calamity Mod
+# Important Note
++ I do not own any of the sound or image files containing in this project.
 
-# BEWARE. THE GAME IS AT ITS HARDEST DIFFICULTY ONCE "KINGSLAYER" PLAYS
+# Files
+- Main-menu Music: Bad Apple (Project Touhou)
+- Background Music: It's going down now (Persona 3 Reload)
+- Background Music: Young Girl A (Siinamota)
+- Background Music: Kingslayer (Bring Me The Horizon Feat. BabyMetal)
+
+# DO NOTE, ONCE YOU HEAR KINGSLAYER, THE GAME GETS REALLY HARD.
+
+- Sound effects: Project Touhou
+- Bullets: Project Touhou
+- Player: Project Touhou / Marisa Kirisame
+- Background: Project Touhou 
+- Enemies: Project Touhou / Shizuha Aki, Hina Kagiyama, Nitori Kawashiro, Aya Shameimaru, Kanako Yasaka
+- Icons: Calamity Icon - Terraria / Calamity Mod / Project Touhou
