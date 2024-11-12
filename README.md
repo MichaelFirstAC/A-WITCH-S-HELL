@@ -1,6 +1,7 @@
 # A Witch’s Hell
 
 ![Header Image](images/title.png)
+#[Gameplay Demo](https://youtu.be/9jMt8xT-MtA)
 
 A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
 
@@ -72,9 +73,6 @@ Navigate with arrow keys; press **Z** to select:
 
 ## Increasing Difficulty
 - The game grows harder over time with faster spawn rates and more advanced enemies. Difficulty tiers escalate every 30 seconds to 5 minutes with new enemy types and patterns.
-
-# Gameplay Demo
-[Watch the video on YouTube](https://youtu.be/9jMt8xT-MtA)
 
 # Important Notes
 All images and sounds are credited to their respective creators.
