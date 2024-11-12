@@ -41,7 +41,7 @@ A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorith
 - **Multiple Fire Types**: Distinct player fire modes for different enemy scenarios.
 - **Full Animation and Sound Effects**.
 
-## Tutorial
+# Tutorial
 
 ## Menu Options
 Navigate with arrow keys; press **Z** to select:
