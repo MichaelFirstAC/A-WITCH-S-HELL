@@ -2,7 +2,7 @@
 
 ![Header Image](images/title.png)
 
-A bullet-hell game developed in Python 2, 3 and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
+A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
 
 # Screenshots
 ![Image](images/screenshot1.png)
@@ -15,6 +15,12 @@ A bullet-hell game developed in Python 2, 3 and PyGame, created for an Algorithm
 - Python 3
 - PyGame
 
+# Installation
+- Download this file as a Zip
+- Extract it to a desired location
+- Open the folder as a directory
+- Run 'main.py'
+
 # Controls
 - **Z**: Fire and select options.
 - **X**: Use a bomb, canceling nearby projectiles.
@@ -26,9 +32,6 @@ A bullet-hell game developed in Python 2, 3 and PyGame, created for an Algorithm
 - **Use Focus Mode Wisely**: Activate in tight situations to move with precision, but switch to fast movement for quick pickups.
 - **Bomb Strategically**: Use bombs only when you're about to get hit. They serve as an extra life if used effectively.
 - **Embrace the Challenge**: Remember, this is a bullet hell game. Dodge, focus, and have fun!
-
-# Usage
-Run the game by executing `main.py`.
 
 # Features
 - **Bullet Hell Mechanics**: Touhou-style gameplay, one-hit small hitbox, and heavy bullet patterns.
