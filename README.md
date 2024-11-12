@@ -1,6 +1,14 @@
 # A Witch’s Hell
 
+![Header Image](images/title.png)
+
 A bullet-hell game developed in Python 2, 3 and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
+
+# Screenshots
+![Image](images/screenshot1.png)
+![Image](images/screenshot2.png)
+![Image](images/screenshot3.png)
+![Image](images/screenshot4.png)
 
 # Dependencies
 - Python 2
