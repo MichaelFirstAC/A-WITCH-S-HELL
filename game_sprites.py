@@ -1,6 +1,6 @@
 """Author: Michael
-   Description: Creates a module used for the game "A WITCH'S HELL" 
-   creating many sprite classes. 
+    Description: Creates a module used for the game "A WITCH'S HELL" 
+    creating many sprite classes. 
 """
 
 #Import needed module
@@ -50,11 +50,11 @@ class Button(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     '''The player class sprite. This class sprite is the player model being 
     controlled by the user.'''
- 
+
     def __init__(self, screen):
         '''This method initializes the sprite using the screen parameter to 
         set boundaries in update.'''
- 
+
         # Call the parent __init__() method
         pygame.sprite.Sprite.__init__(self)
         
@@ -102,7 +102,7 @@ class Player(pygame.sprite.Sprite):
         
         #Set up spawn
         self.reset()
-      
+    
     def change_direction(self, xy_change):
         '''This method takes a xy tuple parameter to change the direction of 
         the player.'''
@@ -269,19 +269,19 @@ class Player(pygame.sprite.Sprite):
             self.__temp_invincible -= 1
             #Every 15 frames and every 3 frames close by will be invisible.
             if self.__temp_invincible % 15 <= 6 and \
-               self.__temp_invincible % 15 > 2:
+            self.__temp_invincible % 15 > 2:
                 self.image = self.__temp               
                 
         #Update sprite position using boundaries.
         #Horizontal position.
         if ((self.rect.left > 0) and (self.__dx < 0)) or\
-           ((self.rect.right < self.__screen.get_width()-200) and\
+            ((self.rect.right < self.__screen.get_width()-200) and\
             (self.__dx > 0)):
             self.rect.centerx += self.__dx/self.__focus*self.__diagonal
         #Vertical position
         if ((self.rect.top > 0) and (self.__dy < 0)) or\
-                  ((self.rect.bottom < self.__screen.get_height()) and\
-                   (self.__dy > 0)):
+                    ((self.rect.bottom < self.__screen.get_height()) and\
+                    (self.__dy > 0)):
             self.rect.centery += self.__dy/self.__focus*self.__diagonal
             
         #Cool down control.
@@ -421,8 +421,7 @@ class Enemy(pygame.sprite.Sprite):
             
             #Left turning frames created by fliping right turning frames
             for frame in self.__lock_frames_right:
-                self.__lock_frames_left.append(pygame.transform.flip(frame,
-                                                                     1, 0))        
+                self.__lock_frames_left.append(pygame.transform.flip(frame,1, 0))        
             
         #Setting default properites
         self.__frames = self.__unlock_frames
@@ -535,7 +534,7 @@ class Enemy(pygame.sprite.Sprite):
             self.__target_degs += vary
             self.__temp_cool_rate = self.__cool_rate
             return Bullet(self.__screen, self, self.__enemy_type+1,
-                          self.__target_degs) 
+                        self.__target_degs) 
         
         #Type 2, fire three bullets in a triple spread pattern towards target 
         #with little variation.
@@ -546,15 +545,15 @@ class Enemy(pygame.sprite.Sprite):
                 self.__target_degs += vary                 
             self.__temp_cool_rate = self.__cool_rate              
             return [Bullet(self.__screen, self, self.__enemy_type+1, 
-                           self.__target_degs-50), 
+                            self.__target_degs-50), 
                     Bullet(self.__screen, self, 
-                           self.__enemy_type+1, self.__target_degs-25),
+                            self.__enemy_type+1, self.__target_degs-25),
                     Bullet(self.__screen, self, self.__enemy_type+1,
-                           self.__target_degs),
+                            self.__target_degs),
                     Bullet(self.__screen, self, self.__enemy_type+1,
-                                               self.__target_degs+25),
+                                                self.__target_degs+25),
                     Bullet(self.__screen, self, self.__enemy_type+1,
-                                               self.__target_degs+55)]
+                                                self.__target_degs+55)]
         
         #Type 3, Fire four bullets in a 90 degree gap each. The degree of 
         #direction will change and rotate as frames pass by.
@@ -569,13 +568,13 @@ class Enemy(pygame.sprite.Sprite):
             self.__target_degs += self.__degs_change
             self.__temp_cool_rate = self.__cool_rate              
             return [Bullet(self.__screen, self, self.__enemy_type+1,
-                           self.__target_degs),
-                   Bullet(self.__screen, self, self.__enemy_type+1,
-                          self.__target_degs+90),
-                   Bullet(self.__screen, self, self.__enemy_type+1,
-                          self.__target_degs+180),
-                   Bullet(self.__screen, self, self.__enemy_type+1,
-                          self.__target_degs+270)]
+                            self.__target_degs),
+                    Bullet(self.__screen, self, self.__enemy_type+1,
+                            self.__target_degs+90),
+                    Bullet(self.__screen, self, self.__enemy_type+1,
+                            self.__target_degs+180),
+                    Bullet(self.__screen, self, self.__enemy_type+1,
+                            self.__target_degs+270)]
         
         #Type 4, fire at target will a lot of variation in direction.
         elif self.__enemy_type == 4:
@@ -584,7 +583,7 @@ class Enemy(pygame.sprite.Sprite):
             self.__target_degs += vary                 
             self.__temp_cool_rate = self.__cool_rate              
             return Bullet(self.__screen, self, self.__enemy_type+1, 
-                           self.__target_degs)     
+                            self.__target_degs)     
         
         #Type 5, spread bullets in all directions, 60 degrees gap.
         elif self.__enemy_type == 5:
@@ -793,13 +792,13 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, screen, shooter, shoot_type, degs = None):
         '''This method initializes the bullet sprite using parameters such 
         as screen, shooter of bullet, shoot type, and degrees.'''
-   
+    
         # Call the parent __init__() method
         pygame.sprite.Sprite.__init__(self)
         
         #Load appropriate image for bullet depending on shoot type.
         self.image = pygame.image.load("images/bullet"
-                                       +str(shoot_type)+".png").convert_alpha()
+                                        +str(shoot_type)+".png").convert_alpha()
         
         #Set up default values.
         self.rect = self.image.get_rect()
@@ -888,7 +887,7 @@ class Spawner(pygame.sprite.Sprite):
             
             # Call the parent __init__() method
             pygame.sprite.Sprite.__init__(self)
-     
+        
             self.image = pygame.Surface((0,0))
             self.rect = self.image.get_rect()
             self.__type = spawner_type
@@ -913,9 +912,9 @@ class Spawner(pygame.sprite.Sprite):
         
         #Spawn appropriate enemy depending on type
         enemy_type = random.randrange(self.__spawn_range[0], 
-                                      self.__spawn_range[1])
+                                        self.__spawn_range[1])
         return Enemy(self.__screen, enemy_type)       
-  
+
     def set_lock(self, mode):
         '''This method sets the instance lock between boolean values. 
         Determines when to countdown spawn time.'''
@@ -975,7 +974,7 @@ class Pick_up(pygame.sprite.Sprite):
     def __init__(self, screen, enemy, drop_type):
             '''This method initializes the pick class using the screen parameter 
             as bounaries, sprite to get spawn position and drop_type.'''
-             
+            
             # Call the parent __init__() method
             pygame.sprite.Sprite.__init__(self)
             
@@ -1200,7 +1199,7 @@ class Score_tab(pygame.sprite.Sprite):
         for stat in self.__stats:
             label = self.__font.render(stat, 1, (self.__stat_colour)) 
             self.__stat_labels.append(label)        
-                       
+                    
         #Blit image on to surface. 
         self.image = pygame.image.load("images/score_tab.png").convert()
         
@@ -1240,7 +1239,7 @@ class Cloud(pygame.sprite.Sprite):
     def __init__(self, screen):
         '''This method initializes the cloud class using the screen parameter 
         as bounaries.'''
-         
+        
         # Call the parent __init__() method
         pygame.sprite.Sprite.__init__(self)
         
@@ -1300,7 +1299,7 @@ class Cloud(pygame.sprite.Sprite):
             self.random_type()
             self.random_speed()
             self.random_reset()
-   
+    
 class Background(pygame.sprite.Sprite):
     '''This class defines a surface sprite to blit the scrolling background on.
     This background will reset at a specific position while scrolling to give 
@@ -1312,7 +1311,7 @@ class Background(pygame.sprite.Sprite):
         
         # Call the parent __init__() method
         pygame.sprite.Sprite.__init__(self)
- 
+    
         # Create surface initialize rect, position.
         self.image = pygame.Surface((440, 480))
         self.rect = self.image.get_rect()
