@@ -89,5 +89,5 @@ All images and sounds are credited to their respective creators.
 - Bullets: Project Touhou
 - Player: Project Touhou / Marisa Kirisame
 - Background: Project Touhou 
-- Enemies: Project Touhou / Shizuha Aki, Hina Kagiyama, Nitori Kawashiro, Aya Shameimaru, Kanako Yasaka
+- Enemies: Project Touhou / Shizuha Aki, Hina Kagiyama, Nitori Kawashiro, Aya Shameimaru, Kanako Yasaka (Mountain of Faith)
 - Icons: Calamity Icon - Terraria / Calamity Mod / Project Touhou
