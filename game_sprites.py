@@ -20,6 +20,7 @@ class Button(pygame.sprite.Sprite):
         # Call the parent __init__() method
         pygame.sprite.Sprite.__init__(self)
         
+        #Set up instances
         self.__message = message
         self.__font = pygame.font.Font("fonts/Pixeltype.ttf", 40)
         self.__select = 0
@@ -79,26 +80,28 @@ class Player(pygame.sprite.Sprite):
         self.__temp = pygame.image.load("images/temp.png").convert_alpha()
 
         #Set other instances needed for this class.
-        self.__frames = self.__station_frames
-        self.image = self.__frames[0] 
-        self.rect = self.image.get_rect()
-        self.rect.center = ((screen.get_width()-200)/2, 
-                            screen.get_height()- 2*self.rect.height)
+        self.__frames = self.__station_frames #Set other instances needed for this class
+        self.image = self.__frames[0] #Set other instances needed for this class
+        self.rect = self.image.get_rect() #Set other instances needed for this class
+        
+        #Set player sprite to the center of the bottom of the screen.
+        self.rect.center = ((screen.get_width()-200)/2, screen.get_height()- 2*self.rect.height)
+        
         self.__index = 0 #For animation image
         self.__frame_refresh = 2 #For animation refresh
-        self.__temp_frame_refresh = self.__frame_refresh   
-        self.__screen = screen
-        self.__dx = 0
-        self.__dy = 0
-        self.__diagonal = 1
-        self.__focus = 1
-        self.__invincible_frames = 110
-        self.__lock = 0
-        self.__shoot = 0
-        self.__cool_rate = 3
-        self.__focus_cool_rate = 9
-        self.__temp_cool_rate = self.__cool_rate
-        self.__temp_invincible = 0
+        self.__temp_frame_refresh = self.__frame_refresh #for animation refresh
+        self.__screen = screen #For boundaries
+        self.__dx = 0 #For movement
+        self.__dy = 0 #For movement
+        self.__diagonal = 1 #For diagonal movement
+        self.__focus = 1 #For focus mode
+        self.__invincible_frames = 110 #For invincible mode
+        self.__lock = 0 #For movement lock
+        self.__shoot = 0 #For shooting mode
+        self.__cool_rate = 3 #For cool down
+        self.__focus_cool_rate = 9 #For cool down
+        self.__temp_cool_rate = self.__cool_rate #For cool down
+        self.__temp_invincible = 0 #For invincible mode
         
         #Set up spawn
         self.reset()
@@ -108,20 +111,20 @@ class Player(pygame.sprite.Sprite):
         the player.'''
         
         #Multiply appropriate vectors by a magnitude of 8
-        if xy_change[0] != 0:
-            self.__dx = xy_change[0]*8
-        elif xy_change[1] != 0:
-            self.__dy = xy_change[1]*8
+        if xy_change[0] != 0: #If the player is moving left or right 
+            self.__dx = xy_change[0]*8 #Set the x vector to 8
+        elif xy_change[1] != 0: #If the player is moving up or down
+            self.__dy = xy_change[1]*8 #Set the y vector to 8
         #No vectors if idle
         else:
             self.__dx = 0
             self.__dy = 0
         
         #Toggle/untoggle diagonal mode when depending on if both value = 1.
-        if self.__dx != 0 and self.__dy != 0:
-            self.diagonal_mode(1)
+        if self.__dx != 0 and self.__dy != 0: #If the player is moving diagonally
+            self.diagonal_mode(1) #Set the diagonal mode to 1
         else:
-            self.diagonal_mode(0)
+            self.diagonal_mode(0) #Set the diagonal mode to 0
         
     def diagonal_mode(self, mode):
         '''This method toggle/untoggles the diagonal mode depending on the 
@@ -129,9 +132,10 @@ class Player(pygame.sprite.Sprite):
         amongst movement.'''
         
         #change factor used in update to approximately 0.7071.
-        if mode:
+        #This is used to ensure that the player moves at the same speed
+        if mode: #If the player is moving diagonally moving speed is reduced by 30%
             self.__diagonal = ((2.0**0.5)/2.0)
-        else:
+        else: #If the player is moving horizontally or vertically moving speed is normal
             self.__diagonal = 1
             
     def focus_mode(self, mode):
@@ -140,9 +144,9 @@ class Player(pygame.sprite.Sprite):
         fire types.'''
         
         #Change focus factor to the correct value depending on mode. 
-        if mode:
+        if mode: #If the player is focused the player moves slower and shoots a stream of bullets
             self.__focus = 1.75
-        else:
+        else: #If the player is not focused the player moves faster and shoots a single bullet
             self.__focus = 1
     
     def shoot_mode(self, mode):
@@ -150,7 +154,7 @@ class Player(pygame.sprite.Sprite):
         parameter (boolean). This is used to toggle constant firing and non-
         firing.'''        
         
-        #Change boolean value
+        #Change boolean value depending 
         self.__shoot = mode
 
     def spawn_bullet(self):
@@ -176,15 +180,14 @@ class Player(pygame.sprite.Sprite):
         new spawn.'''
         
         #Reposition player outside of the bottom screen.
-        self.rect.center = ((self.__screen.get_width()-200)/2,
-                            self.__screen.get_height() + 4*self.rect.height)    
+        self.rect.center = ((self.__screen.get_width()-200)/2,self.__screen.get_height() + 4*self.rect.height)    
         
         #Set invincible mode for certain frames.
         self.__temp_invincible = self.__invincible_frames
         
         #Disable player shoot mode and focus mode.
-        self.__shoot = 0
-        self.__focus = 1
+        self.__shoot = 0 #Disable player shoot mode
+        self.__focus = 1 #Disable player focus mode
         
     def set_invincible(self, frames):
         '''This method sets the player invincible frames to the amount 
@@ -236,11 +239,11 @@ class Player(pygame.sprite.Sprite):
         if self.__temp_invincible > 0:
             #Movement lock while invincible for 30 frames. Lock player.
             if self.__temp_invincible >= self.__invincible_frames-50:
-                self.__lock = 1
-                self.__dx, self.__dy = 0,0
+                self.__lock = 1 #Lock player
+                self.__dx, self.__dy = 0,0 #Stop player movement
                 #Move up only 
                 self.__dy = -5
-            #Unlock player.
+            #Unlock player movement after 30 frames.
             else:
                 self.__lock = 0
             
@@ -249,44 +252,44 @@ class Player(pygame.sprite.Sprite):
                 self.__dy = 0
         
         #Switch to appropriate animation frames (stationary or turning).
-        if self.__dx < 0:
+        if self.__dx < 0: #If the player is moving left
             self.__frames = self.__turn_frames_left
-        elif self.__dx > 0:
+        elif self.__dx > 0: #If the player is moving right
             self.__frames = self.__turn_frames_right
-        else:
+        else: #If the player is not moving
             self.__frames = self.__station_frames
             
         #Update sprite animation frames
         if self.__temp_frame_refresh > 0:
             self.__temp_frame_refresh -= 1
-        else:
-            self.__temp_frame_refresh = self.__frame_refresh
-            self.__index += 1
-            self.image = self.__frames[self.__index % len(self.__frames)]         
+        else: #If the player is not moving
+            self.__temp_frame_refresh = self.__frame_refresh #Set the frame refresh to 2
+            self.__index += 1 #Increment the index by 1
+            self.image = self.__frames[self.__index % len(self.__frames)] #Set the image to the current frame
             
         #Invincible frames tick and image mannipulation to invisible.
-        if self.__temp_invincible > 0:
-            self.__temp_invincible -= 1
+        if self.__temp_invincible > 0: #If the player is invincible
+            self.__temp_invincible -= 1 #Increment the index by 1
             #Every 15 frames and every 3 frames close by will be invisible.
             if self.__temp_invincible % 15 <= 6 and \
             self.__temp_invincible % 15 > 2:
-                self.image = self.__temp               
+                self.image = self.__temp #Set the image to the invisible image
                 
         #Update sprite position using boundaries.
         #Horizontal position.
         if ((self.rect.left > 0) and (self.__dx < 0)) or\
             ((self.rect.right < self.__screen.get_width()-200) and\
-            (self.__dx > 0)):
-            self.rect.centerx += self.__dx/self.__focus*self.__diagonal
+            (self.__dx > 0)): #If the player is within the left and right boundaries
+            self.rect.centerx += self.__dx/self.__focus*self.__diagonal #Move the player sprite horizontally
         #Vertical position
         if ((self.rect.top > 0) and (self.__dy < 0)) or\
                     ((self.rect.bottom < self.__screen.get_height()) and\
-                    (self.__dy > 0)):
-            self.rect.centery += self.__dy/self.__focus*self.__diagonal
+                    (self.__dy > 0)): #If the player is within the top and bottom boundaries
+            self.rect.centery += self.__dy/self.__focus*self.__diagonal #Move the player sprite vertically
             
         #Cool down control.
-        if self.__temp_cool_rate > 0 :
-            self.__temp_cool_rate -= 1
+        if self.__temp_cool_rate > 0 : #If the player is not able to shoot
+            self.__temp_cool_rate -= 1 #Decrement the cool down by 1
         
 class Hitbox(pygame.sprite.Sprite):
     '''The sprite for the player hit box sprite. Used in bullet detection.'''
@@ -299,14 +302,14 @@ class Hitbox(pygame.sprite.Sprite):
         
         #Image loading
         self.__hitbox = pygame.image.load("images/hitbox.png")\
-            .convert_alpha()
-        self.__temp = pygame.image.load("images/temp.png").convert_alpha()
+            .convert_alpha() #Load the hitbox image
+        self.__temp = pygame.image.load("images/temp.png").convert_alpha() #Load the temp image
         
         #Instance value setting.
-        self.image = self.__hitbox
-        self.rect = self.image.get_rect()
-        self.__player = player
-        self.__screen = screen
+        self.image = self.__hitbox #Load the hitbox image
+        self.rect = self.image.get_rect() #Get the rectangle of the hitbox image
+        self.__player = player #Set the player sprite
+        self.__screen = screen #Set the screen
     
     def position(self, player):
         '''This method uses the player sprite instance to reposition itself.'''
@@ -319,10 +322,10 @@ class Hitbox(pygame.sprite.Sprite):
         visible to invisible.'''
         
         #Change image depending on if visible
-        if visible:
-            self.image = self.__hitbox
-        else:
-            self.image = self.__temp
+        if visible: #If visible
+            self.image = self.__hitbox #Set the image to the hitbox image
+        else: #If invisible
+            self.image = self.__temp #Set the image to the temp image
 
     def update(self):
         '''This sprite updates the position of the hitbox sprite. using a
@@ -332,8 +335,8 @@ class Hitbox(pygame.sprite.Sprite):
         self.position(self.__player)
         
         #Set invisible if outside bottom of screen - player reset property
-        if self.rect.top > self.__screen.get_height():
-            self.set_visible(0)
+        if self.rect.top > self.__screen.get_height(): #If invisible
+            self.set_visible(0) #Set the visible to 0
         
         
 class Bomb(pygame.sprite.Sprite):
@@ -348,14 +351,14 @@ class Bomb(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)        
         
         #Set instance values.
-        self.__side = 20
-        self.image = pygame.Surface((self.__side,self.__side))
-        self.rect = self.image.get_rect()
-        self.__start = xy_position
-        self.rect.center = xy_position
-        self.__finish_raidus = 700
-        self.__expand = 30
-        self.__width = 3
+        self.__side = 20 #Set the side to 20
+        self.image = pygame.Surface((self.__side,self.__side)) #Set the image to a surface
+        self.rect = self.image.get_rect() #Get the rectangle of the image
+        self.__start = xy_position #Set the start position to the xy position
+        self.rect.center = xy_position #Set the center of the rectangle to the xy position
+        self.__finish_raidus = 700 #Set the finish
+        self.__expand = 30 #Set the expand factor
+        self.__width = 3 #Set the width
         
     def get_side(self):
         '''This method returns the instance side. Used in accurate rect 
@@ -381,8 +384,7 @@ class Bomb(pygame.sprite.Sprite):
             self.image.set_colorkey((0,0,0))
             
             #Draw circle in surface.
-            pygame.draw.circle(self.image, (255,255,255), (self.__side//2
-                                , self.__side//2), self.__side//2, self.__width)
+            pygame.draw.circle(self.image, (255,255,255), (self.__side//2, self.__side//2), self.__side//2, self.__width)
             
             #Reset rect for proper collision.
             self.rect = self.image.get_rect()
@@ -391,7 +393,7 @@ class Bomb(pygame.sprite.Sprite):
         #If done, kill bomb.
         else:
             self.kill()
-              
+            
 class Enemy(pygame.sprite.Sprite):
     '''The Enemy sprite class that shoots bullets at player with different 
     patterns depending on the enemy type.'''
@@ -407,8 +409,8 @@ class Enemy(pygame.sprite.Sprite):
         #Set up and load animation frames.
         self.__unlock_frames = []
         for index in range(4):
-            self.__unlock_frames.append(pygame.image.load("images/fairy"
-                +str(enemy_type)+"_"+str(index)+".png").convert_alpha())
+            #Load frames of enemy type sprites.
+            self.__unlock_frames.append(pygame.image.load("images/fairy"+str(enemy_type)+"_"+str(index)+".png").convert_alpha())
         
         #Load frames of turning animation for boss type enemies.
         self.__lock_frames_right = []
@@ -416,58 +418,61 @@ class Enemy(pygame.sprite.Sprite):
         if enemy_type < 4:
             #Create right turning frames from image files.
             for index in range(4):
-                self.__lock_frames_right.append(pygame.image.load("images/turn"
-                    +str(enemy_type)+"_"+str(index)+".png").convert_alpha())
+                #Load frames of enemy type sprites.
+                self.__lock_frames_right.append(pygame.image.load("images/turn"+str(enemy_type)+"_"+str(index)+".png").convert_alpha())
             
             #Left turning frames created by fliping right turning frames
             for frame in self.__lock_frames_right:
+                #Flip frames to create left turning frames.
                 self.__lock_frames_left.append(pygame.transform.flip(frame,1, 0))        
             
         #Setting default properites
-        self.__frames = self.__unlock_frames
-        self.image = self.__frames[0]
-        self.__down_frames = 0
-        self.__active_frames = 0
-        self.__cool_rate = 0
-        self.__dx = 0
-        self.__dy = 0
-        self.__hp = 0
-        self.__degs_change = 0     
-        self.rect = self.image.get_rect()
-        self.rect.center = (400-50*enemy_type, 340-50*enemy_type)
-        self.__screen = screen        
-        self.__target_degs = None
-        self.__target_y = screen.get_height()+self.rect.height
-        self.__enemy_type = enemy_type
-        self.__index = 0
-        self.__frame_refresh = 2
-        self.__images = 4 
-        self.__lock = 0
-        self.__killed  = 0
+        self.__frames = self.__unlock_frames #Set default frames
+        self.image = self.__frames[0] #Load image file
+        self.__down_frames = 0 #Set down frames
+        self.__active_frames = 0 #Set active frames
+        self.__cool_rate = 0 #Set cool rate
+        self.__dx = 0 #Set x vector
+        self.__dy = 0 #Set y vector
+        self.__hp = 0 #Set hp value
+        self.__degs_change = 0 #Set degrees change
+        self.rect = self.image.get_rect() #Get the rectangle of the image
+        self.rect.center = (400-50*enemy_type, 340-50*enemy_type) #Set the center of the rectangle
+        self.__screen = screen #Set the screen
+        self.__target_degs = None #Set the target degrees
+        self.__target_y = screen.get_height()+self.rect.height #Set the target y
+        self.__enemy_type = enemy_type #Set the enemy type
+        self.__index = 0 #Set the index of the enemy sprite
+        self.__frame_refresh = 2 #Set the frame
+        self.__images = 4 #Set the images
+        self.__lock = 0 #Set the lock mode
+        self.__killed  = 0 #Set the killed mode
         
         #Setting special enemy instance values depending on enemy type.
-        if enemy_type == 1:
+        #enemy 1-2 are common types.
+        #enemy 3-5 are bosses.
+        if enemy_type == 1: #If the enemy type is 1
             self.__down_frames = 60
             self.__active_frames = 60
             self.__cool_rate = 5
             self.__hp = 35
-        elif enemy_type == 2:
+        elif enemy_type == 2: #If the enemy type is 2
             self.__down_frames = 30
             self.__active_frames = 40
             self.__cool_rate = 10
             self.__hp = 40  
-        elif enemy_type == 3:
+        elif enemy_type == 3: #If the enemy type is 3
             self.__down_frames = 0
             self.__active_frames = 12
             self.__cool_rate = 4
             self.__hp = 45
             self.__degs_change = 6
-        elif enemy_type == 4:
+        elif enemy_type == 4: #If the enemy type is 4
             self.__down_frames = 60
             self.__active_frames = 15
             self.__cool_rate = 3
             self.__hp = 10 
-        elif enemy_type == 5:
+        elif enemy_type == 5: #If the enemy type is 5
             self.__down_frames = 30
             self.__active_frames = 30
             self.__cool_rate = 15
@@ -477,27 +482,24 @@ class Enemy(pygame.sprite.Sprite):
         self.setup()
         
         #Set temps used in countdowns.
-        self.__temp_down_frames = self.__down_frames
-        self.__temp_frame_refresh = self.__frame_refresh
-        self.__temp_active_frames = self.__active_frames
-        self.__temp_cool_rate = self.__cool_rate
+        self.__temp_down_frames = self.__down_frames #Down frames
+        self.__temp_frame_refresh = self.__frame_refresh #Current frame
+        self.__temp_active_frames = self.__active_frames #Active frames
+        self.__temp_cool_rate = self.__cool_rate #Cool rate
         
     def setup(self):
         '''This method sets up the sprite when it spawns. This method decides 
         where the sprite spawns, and where it goes.'''
         
         #Spawn location setting.
-        x_pos = random.randrange(self.rect.width,
-            self.__screen.get_width()-201-self.rect.width)
-        y_pos = 0-self.rect.height
-        self.rect.center = (x_pos, y_pos)
+        x_pos = random.randrange(self.rect.width,self.__screen.get_width()-201-self.rect.width) #Set the x position
+        y_pos = 0-self.rect.height #Set the y position
+        self.rect.center = (x_pos, y_pos) #Set the center of the rectangle
         
         #Static target position for boss type sprites.
         if self.__enemy_type < 4:
-            target_x = random.randrange(100, 
-                self.__screen.get_width()-201-self.rect.width, 100)
-            target_y = random.randrange(100, 
-                self.__screen.get_height()-229, 50)
+            target_x = random.randrange(100, self.__screen.get_width()-201-self.rect.width, 100) #Set the x position
+            target_y = random.randrange(100, self.__screen.get_height()-229, 50) #Set the y position
             
             #Get the degrees between the target position and starting position.
             degs = self.calc_degs(target_x,target_y)
@@ -515,6 +517,7 @@ class Enemy(pygame.sprite.Sprite):
         elif self.__enemy_type >= 4:
             self.__dx = 1
             self.__dy = 2
+            #Change direction when colliding with boundary.
             if x_pos > (self.__screen.get_width()-200)/2:
                 self.__dx = -self.__dx
         
@@ -529,70 +532,66 @@ class Enemy(pygame.sprite.Sprite):
         #Type 1, fire 1 bullet that tracks in the direction of the target 
         #with some variation.
         if self.__enemy_type == 1:
-            self.__target_degs = degs
-            vary = random.randrange(-10, 26, 2)
-            self.__target_degs += vary
-            self.__temp_cool_rate = self.__cool_rate
-            return Bullet(self.__screen, self, self.__enemy_type+1,
-                        self.__target_degs) 
+            self.__target_degs = degs #Set the target degrees to the degrees of the target position
+            vary = random.randrange(-10, 26, 2) #Set the variation to random values between -10 and 26 with a step of 2
+            self.__target_degs += vary #Add the variation to the target degrees 
+            self.__temp_cool_rate = self.__cool_rate #Set the cool rate to the normal cool rate
+            return Bullet(self.__screen, self, self.__enemy_type+1,self.__target_degs) #Return the bullet
         
         #Type 2, fire three bullets in a triple spread pattern towards target 
         #with little variation.
         elif self.__enemy_type == 2:
-            if self.__target_degs == None:
-                self.__target_degs = degs
-                vary = random.randrange(-2, 12, 2)
-                self.__target_degs += vary                 
-            self.__temp_cool_rate = self.__cool_rate              
-            return [Bullet(self.__screen, self, self.__enemy_type+1, 
-                            self.__target_degs-50), 
-                    Bullet(self.__screen, self, 
-                            self.__enemy_type+1, self.__target_degs-25),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                            self.__target_degs),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                                                self.__target_degs+25),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                                                self.__target_degs+55)]
+            if self.__target_degs == None: #Check if the target degrees is None
+                self.__target_degs = degs #Set the target degrees to the degrees of the target position
+                vary = random.randrange(-2, 12, 2) #Set the variation to random values between -2 and 12 with a step of 2
+                self.__target_degs += vary #Add the variation to the target degrees
+            self.__temp_cool_rate = self.__cool_rate #Set the cool rate to the normal cool rate
+            
+                    #Return the bullets in a spread pattern towards the target position
+            return [Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs-50), 
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs-25),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+25),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+55)]
         
         #Type 3, Fire four bullets in a 90 degree gap each. The degree of 
         #direction will change and rotate as frames pass by.
         elif self.__enemy_type == 3:
-            if self.__target_degs == None:
+            if self.__target_degs == None: #Check if the target degrees is None
                 self.__target_degs = 0
             factor = random.randrange(1,4,2)
-            if self.__target_degs < 0 and self.__degs_change < 0:
+            #Check if the target degrees is not 0 and the degrees change is less than 0
+            if self.__target_degs < 0 and self.__degs_change < 0: 
                 self.__degs_change = 9 * factor
+            #Check if the target degrees is greater than 180 and the degrees change is greater than 0
             elif self.__target_degs > 180 and self.__degs_change > 0:
                 self.__degs_change = -9 * factor
-            self.__target_degs += self.__degs_change
-            self.__temp_cool_rate = self.__cool_rate              
-            return [Bullet(self.__screen, self, self.__enemy_type+1,
-                            self.__target_degs),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                            self.__target_degs+90),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                            self.__target_degs+180),
-                    Bullet(self.__screen, self, self.__enemy_type+1,
-                            self.__target_degs+270)]
+            self.__target_degs += self.__degs_change #Add the degrees change to the target degrees
+            self.__temp_cool_rate = self.__cool_rate #Set the cool rate to the normal cool rate
+            # Return the bullets in a 90 degree gap each towards the target position
+            return [Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+90),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+180),
+                    Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+270)]
         
         #Type 4, fire at target will a lot of variation in direction.
         elif self.__enemy_type == 4:
-            self.__target_degs = degs
-            vary = random.randrange(-16, 30, 1)
-            self.__target_degs += vary                 
-            self.__temp_cool_rate = self.__cool_rate              
-            return Bullet(self.__screen, self, self.__enemy_type+1, 
-                            self.__target_degs)     
+            self.__target_degs = degs #Set the direction of the target
+            vary = random.randrange(-16, 30, 1) #Set the direction variation
+            self.__target_degs += vary #Set the direction variation
+            self.__temp_cool_rate = self.__cool_rate #Set the cool rate to the normal cool rate
+            # Return the bullet with a lot of variation in direction
+            return Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs)     
         
         #Type 5, spread bullets in all directions, 60 degrees gap.
         elif self.__enemy_type == 5:
-            self.__target_degs = random.randrange(0, 360, 15)
-            bullets = []
-            for extra_degs in range(0, 360, 60):
-                bullets.append(Bullet(self.__screen, self, self.__enemy_type+1, 
-                    self.__target_degs+extra_degs))             
-            self.__temp_cool_rate = self.__cool_rate     
+            #Set the target degrees to random values between 0 and 360 with a step of 15
+            self.__target_degs = random.randrange(0, 360, 15) 
+            bullets = [] #Set the bullets to an empty list
+            for extra_degs in range(0, 360, 60): #Loop through the range of 0 to 360 with a step of 60
+                #Add the extra degrees to the target degrees and append the bullet to the list.
+                bullets.append(Bullet(self.__screen, self, self.__enemy_type+1, self.__target_degs+extra_degs))             
+            self.__temp_cool_rate = self.__cool_rate #Set the cool rate to the normal cool rate
             return bullets
             
     def calc_degs(self, target_x, target_y):
@@ -715,6 +714,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.__target_degs = None
         
         #Tick down frames and active frames if appropriate.
+        #Lock enemy movement when active frames are not 0.
         if self.__temp_down_frames > 0 and self.__lock != 1: 
             self.__temp_down_frames -= 1
         if self.__temp_active_frames > 0 and self.__temp_down_frames == 0:
@@ -729,6 +729,7 @@ class Enemy(pygame.sprite.Sprite):
         #move class/sprite according to vectors.
         self.rect.centerx += self.__dx
         
+        #Change y vector when colliding with boundary for opposite direction.
         if not self.rect.centery >= self.__target_y:
             self.rect.centery += self.__dy
         else:
@@ -751,38 +752,38 @@ class Explosion(pygame.sprite.Sprite):
         self.__frames = []
         if explosion_type == 0:
             for num in range(4):
-                self.__frames.append(pygame.image.load("images/death"
-                                            +str(num)+".png").convert_alpha())
+                #Load frames of enemy type sprites.
+                self.__frames.append(pygame.image.load("images/death"+str(num)+".png").convert_alpha())
         elif explosion_type == 1:
             for num in range(3):
-                self.__frames.append(pygame.image.load("images/burst"
-                                            +str(num)+".png").convert_alpha())
+                #Load frames of enemy type sprites.
+                self.__frames.append(pygame.image.load("images/burst"+str(num)+".png").convert_alpha())
                 
         #Set up instances.
-        self.image = self.__frames[0]
-        self.rect = self.image.get_rect()
-        self.rect.center = xy_position
-        self.__frame_refresh = 1 
-        self.__temp_refresh = self.__frame_refresh
-        self.__index = 0
+        self.image = self.__frames[0] #Load image
+        self.rect = self.image.get_rect() #Get rectangle
+        self.rect.center = xy_position #Set center
+        self.__frame_refresh = 1 #Set frame refresh
+        self.__temp_refresh = self.__frame_refresh #Set temp refresh
+        self.__index = 0 #Set index
     
     def update(self):
         '''Update class as frames passes by. Control frame refresh, new frame
         and kill.'''
         
-        #Frame tick
+        #Frame tick refresh
         if self.__temp_refresh > 0:
             self.__temp_refresh -= 1
             
-        #Kill after animation
+        #Kill after animation completes.
         else:
             if self.__index >= len(self.__frames)-1:
                 self.kill()
-            #Next frame if appropriate
+            #Next frame if appropriate frames pass by.
             else:
-                self.__index += 1
-                self.image = self.__frames[self.__index]
-            self.__temp_refresh = self.__frame_refresh
+                self.__index += 1 #Increment the index by 1
+                self.image = self.__frames[self.__index] #Set the image to the current frame
+            self.__temp_refresh = self.__frame_refresh #Set the temp refresh to the frame refresh
             
 class Bullet(pygame.sprite.Sprite):
     '''This is the Bullet class sprite that creates a bullet that is used to 
@@ -797,30 +798,29 @@ class Bullet(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #Load appropriate image for bullet depending on shoot type.
-        self.image = pygame.image.load("images/bullet"
-                                        +str(shoot_type)+".png").convert_alpha()
+        self.image = pygame.image.load("images/bullet"+str(shoot_type)+".png").convert_alpha()
         
         #Set up default values.
-        self.rect = self.image.get_rect()
-        self.rect.center = shooter.rect.center
-        self.__screen = screen
-        self.__dx = 0
-        self.__dy = 0
-        self.__grazed = 0
-        self.__graze_frames = 10
-        self.__shoot_type = shoot_type
-        self.__temp_graze = self.__graze_frames
+        self.rect = self.image.get_rect() #Get the rectangle of the image 
+        self.rect.center = shooter.rect.center #Set the center of the rectangle to the shooter's center
+        self.__screen = screen #Set the screen
+        self.__dx = 0 #Set the x vector
+        self.__dy = 0 #Set the y vector
+        self.__grazed = 0 #Set the grazed mode
+        self.__graze_frames = 10 #Set the graze frames
+        self.__shoot_type = shoot_type #Set the shoot type
+        self.__temp_graze = self.__graze_frames #Set the temp graze
         
         #Set unique bullet speed and direction depending on shoot type.
         if shoot_type == 0:
             self.__dy = -20
         elif shoot_type ==1:
             self.__dx = math.cos(math.radians(degs)) * 20
-            self.__dy = -(math.sin(math.radians(degs)) * 20)            
+            self.__dy = -(math.sin(math.radians(degs)) * 20)
         elif shoot_type == 2:
             self.__dx = math.cos(math.radians(degs)) * 6
             self.__dy = -(math.sin(math.radians(degs)) * 6)
-        elif shoot_type ==3:         
+        elif shoot_type ==3:
             self.__dx = math.cos(math.radians(degs)) * 6
             self.__dy = -(math.sin(math.radians(degs)) * 6)    
         elif shoot_type ==4:
@@ -870,12 +870,9 @@ class Bullet(pygame.sprite.Sprite):
             
         #Kill bullet if out of screen for effciency.
         if (0 >= self.rect.bottom or self.rect.top >= 
-            self.__screen.get_height()) or (0 >= self.rect.right or
-                self.rect.left >= self.__screen.get_width()-200):
-            
+            self.__screen.get_height()) or (0 >= self.rect.right or self.rect.left >= self.__screen.get_width()-200):
             self.kill()
             
-#TO DO: SPAWNER
 class Spawner(pygame.sprite.Sprite):
     '''This class is the spawner class which determines when to spawn a type of
     enemy as frames pass by.'''
@@ -888,20 +885,22 @@ class Spawner(pygame.sprite.Sprite):
             # Call the parent __init__() method
             pygame.sprite.Sprite.__init__(self)
         
-            self.image = pygame.Surface((0,0))
-            self.rect = self.image.get_rect()
-            self.__type = spawner_type
-            self.__screen = screen
-            self.__lock = 0
-            self.__spawn_types = []
+            self.image = pygame.Surface((0,0)) #Set the image to a surface
+            self.rect = self.image.get_rect() #Get the rectangle of the image
+            self.__type = spawner_type #Get the type of enemy
+            self.__screen = screen #Get the screen
+            self.__lock = 0 #Set the lock mode
+            self.__spawn_types = [] #Set the spawn types to an empty list
             
+            #Set up instance values depending on type.
+            #Common type spawner
             if self.__type == 0:
                 self.__spawn_frames = 150
                 self.__spawn_range = [4, 6]
+            #Boss type spawner
             elif self.__type == 1:
                 self.__spawn_frames = 300
                 self.__spawn_range = [1, 4]
-                
             self.__temp_frames = self.__spawn_frames
     
     def spawn_enemy(self):
@@ -911,8 +910,7 @@ class Spawner(pygame.sprite.Sprite):
         self.__temp_frames = self.__spawn_frames
         
         #Spawn appropriate enemy depending on type
-        enemy_type = random.randrange(self.__spawn_range[0], 
-                                        self.__spawn_range[1])
+        enemy_type = random.randrange(self.__spawn_range[0], self.__spawn_range[1])
         return Enemy(self.__screen, enemy_type)       
 
     def set_lock(self, mode):
@@ -985,8 +983,7 @@ class Pick_up(pygame.sprite.Sprite):
             self.__temp_speed = self.__speed_frames
             
             #Image loading 
-            self.image = pygame.image.load("images/drop"
-                +str(self.__type)+".png").convert_alpha()
+            self.image = pygame.image.load("images/drop"+str(self.__type)+".png").convert_alpha()
             self.rect = self.image.get_rect()
             
             #Rect setting.
@@ -1024,7 +1021,7 @@ class Pick_up(pygame.sprite.Sprite):
                 self.__dy += 1
             elif self.__dy > 3:
                 self.__dy -= 1
-                    
+            
             self.__temp_speed = self.__speed_frames
             
         else:
@@ -1064,34 +1061,31 @@ class Score_tab(pygame.sprite.Sprite):
         #Life frames image loading
         self.__life_frames = []
         for frame in range(2):
-            self.__life_frames.append(pygame.image.load(
-                "images/life"+str(frame)+".png").convert_alpha())         
+            self.__life_frames.append(pygame.image.load("images/life"+str(frame)+".png").convert_alpha())         
         
         #Bomb frames image loading
         self.__bomb_frames = []
         for frame in range(2):
-            self.__bomb_frames.append(pygame.image.load(
-                "images/bomb"+str(frame)+".png").convert_alpha())         
+            self.__bomb_frames.append(pygame.image.load("images/bomb"+str(frame)+".png").convert_alpha())         
         
         #Set default instances.
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect() #Get the rectangle of the image
         self.rect.center = (screen.get_width()-self.rect.width/2,\
                             screen.get_height()/2)
-        self.__screen = screen
-        self.__font = pygame.font.Font("fonts/Pixeltype.ttf", 40)
-        self.__score = 0
-        self.__scores = ["HIGHSCORE", ("%10s" %(str(self.__highscore))).replace(
-            " ", "0"),
-                        "SCORE",("%10s" %(str(self.__score))).replace(" ", "0")] 
-        self.__score_labels = []
-        self.__lives = 2
-        self.__bombs = 1
-        self.__stats = ["LIVES", "BOMBS"]
-        self.__stat_labels = []
-        self.__score_colour = (255,255,255)
-        self.__stat_colour = (255,255,255)
-        self.__colour_frames = 15
-        self.__temp_colour_frames = self.__colour_frames
+        self.__screen = screen #Set the screen
+        self.__font = pygame.font.Font("fonts/Pixeltype.ttf", 40) #Set the font
+        self.__score = 0 #Set the initial score
+        self.__scores = ["HIGHSCORE", ("%10s" %(str(self.__highscore))).replace(" ", "0"),
+                        "SCORE",("%10s" %(str(self.__score))).replace(" ", "0")] #Set the scores
+        self.__score_labels = [] #Set the score labels
+        self.__lives = 2 #Set the initial lives
+        self.__bombs = 1 #Set the initial bombs
+        self.__stats = ["LIVES", "BOMBS"] #Set the stats
+        self.__stat_labels = [] #Set the stat labels
+        self.__score_colour = (255,255,255) #Set the colour
+        self.__stat_colour = (255,255,255) #Set the colour
+        self.__colour_frames = 15 #Set the colour frames
+        self.__temp_colour_frames = self.__colour_frames #Set the temp colour frames
         
     def add_points(self, point_type):
         '''This method add to the points value depending on the type of added 
@@ -1182,8 +1176,7 @@ class Score_tab(pygame.sprite.Sprite):
                 self.__temp_colour_frames = self.__colour_frames      
         
         #Refresh scores for refreshed labels
-        self.__scores = ["HIGHSCORE", ("%10s" %(str(self.__highscore))).replace(
-            " ", "0"),
+        self.__scores = ["HIGHSCORE", ("%10s" %(str(self.__highscore))).replace(" ", "0"),
                         "SCORE",("%10s" %(str(self.__score))).replace(" ", "0")]        
         
         #Reset score labels
