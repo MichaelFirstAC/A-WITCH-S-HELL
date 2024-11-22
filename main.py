@@ -19,7 +19,8 @@ def main():
     
     # DISPLAY - set display resolution and caption.
     screen_size = (640, 480)
-    screen = pygame.display.set_mode(screen_size)    
+    screen = pygame.display.set_mode(screen_size)
+    #Set icon and caption
     pygame.display.set_icon(pygame.image.load(
         "images/icon.png").convert_alpha())
     pygame.display.set_caption("A WITCH'S HELL")
@@ -35,8 +36,10 @@ def main():
     pygame.mouse.set_visible(True)    
     #Quit the game with delay to hear music fade
     pygame.mixer.music.fadeout(1000)
+    #Delay to hear music fade
     pygame.time.delay(1000)
-    pygame.quit()     
+    #Quit pygame
+    pygame.quit()
     
 def pause(screen):
     '''This function pauses the game loop with the darker paused frame as 
@@ -49,16 +52,23 @@ def pause(screen):
     #dark surface is a special surface that is blited to make background darker.
     dark = pygame.Surface((background.get_width()-200, background.get_height()), 
                         flags=pygame.SRCALPHA)
+    #Fill the dark surface with a dark color.
     dark.fill((50, 50, 50, 0))
-    background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)    
+    #Blit the dark surface to the background.
+    background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+    #Paused image blited to the screen.
     paused = pygame.image.load("images/paused.png").convert_alpha()
+    #Blit the paused image to the screen.
     background.blit(
         paused, ((screen.get_width()-330)/2, screen.get_height()-300))
     screen.blit(background, (0, 0))
+    
+    #Buttons set up
     resume_button = game_sprites.Button(
         ((screen.get_width()-200)/2, screen.get_height()-200), "Resume", (255,255,255))
     menu_button = game_sprites.Button(
         ((screen.get_width()-200)/2, screen.get_height()-150), "Main Menu", (255,255,255))
+    
     #Buttons in order
     buttons = [resume_button, menu_button]
     #Set up sprite group.
@@ -67,6 +77,7 @@ def pause(screen):
     #Sound effects 
     select_sound = pygame.mixer.Sound("sounds/select.ogg")
     ok = pygame.mixer.Sound("sounds/ok.ogg")
+    #Set volume of sound effects
     select_sound.set_volume(0.3)
     ok.set_volume(0.3)
     
@@ -111,7 +122,7 @@ def pause(screen):
                     elif selected == [menu_button]:
                         #Return menu value
                         return 0                     
-                                    
+                        
         #Select button highlight
         for select in selected:
             select.set_select()
@@ -135,11 +146,15 @@ def game_over(screen):
     #dark surface is a special surface that is blited to make background darker.
     dark = pygame.Surface((background.get_width()-200, background.get_height()), 
                         flags=pygame.SRCALPHA)
+    #Fill the dark surface with a dark color.
     dark.fill((50, 50, 50, 0))
-    background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)      
+    #Blit the dark surface to the background.
+    background.blit(dark, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+    #Game over image blited to the screen.
     game_over = pygame.image.load("images/game_over.png").convert_alpha()
     background.blit(
         game_over, ((screen.get_width()-400)/2, screen.get_height()-300))
+    #Buttons set up
     screen.blit(background, (0, 0))
     restart_button = game_sprites.Button(
         ((screen.get_width()-200)/2, screen.get_height()-200), "Restart?", 
@@ -154,6 +169,7 @@ def game_over(screen):
     #Sound effects 
     select_sound = pygame.mixer.Sound("sounds/select.ogg")
     ok = pygame.mixer.Sound("sounds/ok.ogg")
+    #Set volume of sound effects
     select_sound.set_volume(0.3)
     ok.set_volume(0.3)
     
@@ -220,6 +236,7 @@ def game_intro(screen):
     # E - Entities - background, buttons and sprite group set up
     background = pygame.image.load("images/title.png").convert()
     screen.blit(background, (0, 0))
+    #Buttons set up
     start_button = game_sprites.Button(
         (screen.get_width()-50, screen.get_height()-120), "Start", (166, 166, 166))
     erase_button = game_sprites.Button(
@@ -277,6 +294,7 @@ def game_intro(screen):
                         selected = [buttons[(buttons.index(selected[0])+1)]]
                 #Confirming button press on z.
                 if event.key == pygame.K_z:
+                    #If erase button is selected, reset highscore.
                     if selected != [erase_button]:
                         keep_going = False
                         ok.play()
@@ -341,8 +359,7 @@ def game_loop(screen):
     bombing = pygame.mixer.Sound("sounds/bomb.ogg")
     bullet_sounds = []
     for sound in range(1,6):
-        bullet_sounds.append(pygame.mixer.Sound("sounds/bullet"+
-            str(sound)+".ogg"))
+        bullet_sounds.append(pygame.mixer.Sound("sounds/bullet"+str(sound)+".ogg"))
     paused.set_volume(0.3)
     player_death.set_volume(0.3)
     player_shoot.set_volume(0.1)
@@ -426,8 +443,10 @@ def game_loop(screen):
                 paused.play()
                 pygame.mixer.music.pause()
                 option = pause(screen)
+                #If option is 0 or 2, keep going is false.
                 if option == 0 or option == 2:
                     keep_going = False
+                #If option is 1, unpause music.
                 if option == 2:
                     window_exit = 1
                 pygame.mixer.music.unpause()
@@ -457,6 +476,7 @@ def game_loop(screen):
             if keys_pressed[pygame.K_LSHIFT] and not player.get_lock():
                 player.focus_mode(1)
                 hitbox.set_visible(1)
+            #If focus mode is not toggled, set focus mode to 0.
             elif not keys_pressed[pygame.K_LSHIFT]:
                 player.focus_mode(0)
                 hitbox.set_visible(0)
@@ -481,7 +501,6 @@ def game_loop(screen):
         for spawner in spawners:
             spawner.set_rate(difficulty)
             
-            
         #Player bullet event. Let player shoot.
         if player.get_shoot() and not player.get_cool_rate() and not \
         player.get_lock():
@@ -502,9 +521,10 @@ def game_loop(screen):
                         player.get_center(), 0))
                     player_death.play()
                     player.reset()
+                    #Life loss event
                     score_tab.life_loss()
                     
-            #Enemy sprites - hitbox collision
+            #Enemy sprites - hitbox collision, if we hit the enemy
             for enemy in pygame.sprite.spritecollide(
                 hitbox, enemy_sprites.sprites(), False):   
                 #Shrink the hitbox rect to detect actual size of hitbox
@@ -517,7 +537,7 @@ def game_loop(screen):
                     player.reset()
                     score_tab.life_loss()
             
-            #Grazing bullets, bullets/player sprite collision - add points.
+            #Grazing bullets, bullets/player sprite collision - add points, if player barely hits.
             for bullet in pygame.sprite.spritecollide(
                 player, enemy_bullet_sprites.sprites(), False):  
                 if player.rect.inflate(-6,-12).colliderect(bullet) and \
@@ -540,7 +560,7 @@ def game_loop(screen):
             elif drop_type == 3:
                 bomb_drop.play()
             #Add point, life or bomb count to score tab depedning on type.
-            score_tab.add_points((drop_type)+6) #+6 is used for drop points
+            score_tab.add_points((drop_type)+6) # +6 is used for drop points
             drop.kill()
             
         #Enemy rect and shoot events.
@@ -603,10 +623,13 @@ def game_loop(screen):
         for bomb in bomb_sprites.sprites():
             for bullet in pygame.sprite.spritecollide(
                 bomb, enemy_bullet_sprites.sprites(), False):
+                
                 #See if bomb is too small to detect collision with rim, 
                 #use entire area to detect area of bomb.
                 #If not to small, use approximate bomb rim area to detect hit 
                 #by seeing if it doesn't collide with outside.
+                
+                #Animate and kill bullet.
                 if bomb.get_side() <= 140 or not bomb.rect.inflate(
                     -bomb.get_side()/4,-bomb.get_side()/4).colliderect(bullet):
                     #Animate and kill bullet.
@@ -616,7 +639,8 @@ def game_loop(screen):
     
         #Detect enemies, record types on screen.
         common_enemies = 0
-        boss_enemies = 0        
+        boss_enemies = 0
+        #Count common and boss enemies on screen.
         for enemy in enemy_sprites.sprites():
             enemy_type = enemy.get_type()
             if enemy_type <= 3:
@@ -631,6 +655,7 @@ def game_loop(screen):
                 spawner.set_lock(0)
                 if not spawner.get_spawn_frames():
                     enemy_sprites.add(spawner.spawn_enemy())
+                    #Reset spawn frames.
             if spawner.get_type() == 1 and boss_enemies == boss_limit:
                 spawner.set_lock(1)
             elif spawner.get_type() == 0 and common_enemies == common_limit:
