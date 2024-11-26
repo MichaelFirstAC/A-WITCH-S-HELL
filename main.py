@@ -1,6 +1,6 @@
-"""Author: Michael
+""" Author: MichaelFirst
     "A WITCH'S HELL"
-    Description: Small Bullet Hell Game - A bullet hell game created in 
+    Description: Endless Bullet Hell Game - A bullet hell game created in 
     pygame with the game_sprites class.
     Known bugs: Some sound do not play when they are supossed to/Late at playing.
     Please note that the instructions are in full detail in the Readme text 
