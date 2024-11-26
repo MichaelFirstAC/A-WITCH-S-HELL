@@ -3,7 +3,7 @@
 ![Header Image](images/title.png)
 
 ## Click [here](https://drive.google.com/file/d/1R480CEgUhq2UXVdb8umG6TU9YWjqFYaW/view?usp=sharing) for Gameplay Demo
-A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
+A bullet-hell game developed in Python 2 (you can run it in Python 3 as well), and PyGame, created for an Algorithm and Programming assignment in BINUS University International Class.
 
 # Screenshots
 ## Home Screen
@@ -20,7 +20,6 @@ A bullet-hell game developed in Python 2, 3, and PyGame, created for an Algorith
 
 # Dependencies
 - Python 2
-- Python 3
 - PyGame
 
 # Installation
