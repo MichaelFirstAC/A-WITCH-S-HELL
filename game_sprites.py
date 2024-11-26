@@ -1,4 +1,4 @@
-"""Author: Michael
+"""Author: MichaelFirst
     Description: Creates a module used for the game "A WITCH'S HELL" 
     creating many sprite classes. 
 """
